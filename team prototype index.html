@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>チーム分けアプリ（完全版）</title>
+<style>
+/* あなたのCSSはそのまま使用（変更なし） */
+:root{--gap:18px; --accent:#0078d7;}
+body{font-family:"Segoe UI",system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; background:#f4f6fa; margin:0; padding:36px; color:#222; display:flex; justify-content:center;}
+.wrap{width:100%; max-width:1200px;}
+header{margin-bottom:18px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+h1{margin:0; font-size:20px; color:var(--accent);}
+.group-row{display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;}
+input[type="text"], input[type="number"]{padding:10px; border-radius:8px; border:1px solid #ccc; font-size:14px;}
+.btn{padding:10px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:600;}
+.btn-add{background:var(--accent); color:white;}
+.btn-run{background:#28a745; color:white;}
+.results{margin-top:24px; display:grid; gap:var(--gap); align-items:start;}
+.team-card{background:#fff; color:#111; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.07); padding:14px; display:flex; flex-direction:column; gap:10px; min-height:160px; user-select:none; transition: transform .12s ease, box-shadow .12s ease; word-break: break-word;}
+.team-title{font-weight:700; font-size:16px; border-bottom:2px solid var(--accent); padding-bottom:6px;}
+.members{flex:1; font-size:14px; overflow:auto;}
+.members div{margin:4px 0; cursor:pointer;}
+.dragging{opacity:0.5; border:2px dashed #0078d7;}
+.members div[contenteditable="true"]{background:#f0f0f0; padding:2px 4px; border-radius:4px;}
+button:focus, input:focus{outline:none;}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <h1>チーム分けアプリ（完全版・ドラッグ対応）</h1>
+    <div style="display:flex;gap:12px; align-items:center; flex-wrap:wrap;">
+      <label>チーム数：<input id="teamCount" type="number" min="1" value="3" style="width:70px"></label>
+      <label>横に表示する列数：<input id="columnsCount" type="number" min="1" value="3" style="width:70px"></label>
+    </div>
+  </header>
+
+  <div id="groupInputsArea">
+    <div class="group-row" id="group-row-1">
+      <input id="name-1" type="text" placeholder="グループ名（空可）" />
+      <input id="size-1" type="number" min="1" placeholder="人数（空は1）" style="width:110px" />
+      <button class="btn btn-add" onclick="addGroupInput()">＋ 追加行</button>
+    </div>
+  </div>
+
+  <div style="margin-top:10px; display:flex; gap:8px;">
+    <button class="btn btn-run" onclick="createTeams()">チーム分けを実行</button>
+    <button class="btn" onclick="clearInputs()">入力をクリア</button>
+  </div>
+
+  <div id="results" class="results" aria-live="polite"></div>
+</div>
+
+<!-- ここが重要！ JavaScript は外部から読む -->
+<script src="script.js"></script>
+</body>
+</html>
